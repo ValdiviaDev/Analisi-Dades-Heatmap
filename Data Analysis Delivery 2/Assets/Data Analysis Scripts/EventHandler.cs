@@ -5,11 +5,12 @@ using UnityEngine;
 public class EventHandler : MonoBehaviour
 {
     public GameObject player;
+    private Writer writer;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        writer = gameObject.GetComponent<Writer>();
     }
 
     // Update is called once per frame
@@ -21,11 +22,12 @@ public class EventHandler : MonoBehaviour
     public void NewDamageEvent()
     {
         DamageEvent damageEvent = null;
-        //TODO
+
         if (player)
             damageEvent.position = player.transform.position;
 
-        
+        writer.AddDamageEvent(damageEvent);
+
     }
 
 }
