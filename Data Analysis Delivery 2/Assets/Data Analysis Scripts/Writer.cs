@@ -29,6 +29,12 @@ public class Writer : MonoBehaviour
         Instance.sessionID = GetUUID();
     }
 
+    public void SessionFinished()
+    {
+        Instance.sessionEndTime = DateTime.Now;
+        Print(); //Serialize data
+    }
+
     public static uint GetUUID()
     {
         return BitConverter.ToUInt32(Guid.NewGuid().ToByteArray(), 0);
@@ -40,51 +46,38 @@ public class Writer : MonoBehaviour
             Instance.damageList.Add(damage);
     }
 
-    public static void Print(string s)
+    public static void Print(/*string s*/)
     {
-        Instance._Print(s);
+        Instance._Print();
     }
 
-    private void _Print(string s)
+    private void _Print(/*string s*/)
     {
-        //if (File.Exists("damage.csv"))
-        //{
-        //    StreamWriter writer = File.AppendText("damage.csv");
-        //    writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + Instance.username + ";" + Instance.sessionStartTime.ToString("dd/MM/yyyy hh:mm:ss") + ";" + Instance.sessionEndTime.ToString("dd/MM/yyyy hh:mm:ss"));
-        //    writer.Close();
-        //}
-        //else
-        //{
-        //    StreamWriter writer = File.CreateText("sessions.csv");
-        //    writer.WriteLine("session_id;username;session_start;session_end");
-        //    writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + Instance.username + ";" + Instance.sessionStartTime.ToString("dd/MM/yyyy hh:mm:ss") + ";" + Instance.sessionEndTime.ToString("dd/MM/yyyy hh:mm:ss"));
-        //    writer.Close();
-        //}
 
 
-      // if (File.Exists("damage.csv"))
-      // {
-      //     StreamWriter writer = File.AppendText("damage.csv");
-      //
-      //     foreach (DamageEvent damage in Instance.damageList)
-      //     {
-      //         writer.WriteLine(Instance.username + ";" + damage.crash_id.ToString("0000000000") + ";" + damage.position.x + ";" + crash.position.y + ";" + crash.position.z + ";" + crash.current_lap + ";" + crash.time.ToString("dd/MM/yyyy hh:mm:ss") + ";" + crash.session_id + ";" + crash.collision_obj_id);
-      //     }
-      //
-      //     writer.Close();
-      // }
-      // else
-      // {
-      //     StreamWriter writer = File.CreateText("crashes.csv");
-      //
-      //     writer.WriteLine("username;crash_id;position_x;position_y;position_z;current_lap;time;session_id;collision_obj_id");
-      //
-      //     foreach (DamageEvent damage in Instance.damageList)
-      //     {
-      //         writer.WriteLine(Instance.username + ";" + crash.crash_id.ToString("0000000000") + ";" + crash.position.x + ";" + crash.position.y + ";" + crash.position.z + ";" + crash.current_lap + ";" + crash.time.ToString("dd/MM/yyyy hh:mm:ss") + ";" + crash.session_id + ";" + crash.collision_obj_id);
-      //     }
-      //     writer.Close();
-      // }
+       if (File.Exists("damage.csv"))
+       {
+           StreamWriter writer = File.AppendText("damage.csv");
+      
+           foreach (DamageEvent damage in Instance.damageList)
+           {
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + damage.position.x + ";" + damage.position.y + ";" + damage.position.z);
+            }
+      
+           writer.Close();
+       }
+       else
+       {
+           StreamWriter writer = File.CreateText("crashes.csv");
+      
+           writer.WriteLine("session_id;position_x;position_y;position_z");
+      
+           foreach (DamageEvent damage in Instance.damageList)
+           {
+               writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + damage.position.x + ";" + damage.position.y + ";" + damage.position.z);
+           }
+           writer.Close();
+       }
     }
 
 

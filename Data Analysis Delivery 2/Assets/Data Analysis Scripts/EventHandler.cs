@@ -8,20 +8,21 @@ public class EventHandler : MonoBehaviour
 {
     public GameObject player;
     private Writer writer;
-    
-
 
     // Start is called before the first frame update
     void Start()
     {
         writer = gameObject.GetComponent<Writer>();
-        
+        writer.SessionStart();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //TODO: Debug: Delete later
+        if (Input.GetKey(KeyCode.P)) { 
+            writer.SessionFinished();
+        }
     }
 
     public void NewDamageEvent()
