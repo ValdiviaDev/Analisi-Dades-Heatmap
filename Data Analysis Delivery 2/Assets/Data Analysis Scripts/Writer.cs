@@ -6,6 +6,8 @@ public class Writer : MonoBehaviour
 {
     public static Writer Instance;
 
+    private List<DamageEvent> damage = new List<DamageEvent>();
+
     private void Awake()
     {
         if (Instance == null)

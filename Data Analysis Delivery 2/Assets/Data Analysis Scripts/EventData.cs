@@ -31,6 +31,6 @@ public class SessionEvent : EventData
 
 public class DamageEvent : EventData
 {
-    Vector3 position;
+    public Vector3 position;
 
 }
