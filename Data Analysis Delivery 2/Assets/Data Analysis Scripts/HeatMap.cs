@@ -34,10 +34,21 @@ public class HeatMap : MonoBehaviour
 
     private void SpawnCube(int x, int y, int counts)
     {
-        Vector3 pos = new Vector3(x * GridSize_X, y * GridSize_Y);
+        Vector3 pos = new Vector3(x * GridSize_X, GetHeight(x * GridSize_X, y * GridSize_Y),y * GridSize_Y);
         var cube = Instantiate(HeatmapCubePrefab, pos, Quaternion.identity) as HeatMapCube;
         float f = Mathf.Clamp01((float)counts / MaxCounts);
         Color c = ColorGradient.Evaluate(f);
         cube.SetColor(c);
+    }
+
+    private float GetHeight(int x, int y)
+    {
+        Vector3 pos = new Vector3(x, 100, y);
+        RaycastHit hit;
+        if (Physics.Raycast(pos, Vector3.down, out hit))
+        {
+            return hit.point.y;
+        }
+        return 0;
     }
 }
