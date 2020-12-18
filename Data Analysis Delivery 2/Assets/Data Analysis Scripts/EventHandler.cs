@@ -9,6 +9,9 @@ public class EventHandler : MonoBehaviour
     public GameObject player;
     private Writer writer;
 
+    //Time in seconds
+    float timer_sicne_start = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +22,9 @@ public class EventHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Increase time each code iteration
+        timer_sicne_start += Time.deltaTime;
+
         //TODO: Debug: Delete later
         if (Input.GetKey(KeyCode.P)) { 
             writer.SessionFinished();
@@ -30,7 +36,10 @@ public class EventHandler : MonoBehaviour
         DamageEvent damageEvent = new DamageEvent();
 
         if (player)
+        {
             damageEvent.position = player.transform.position;
+            damageEvent.seconds_since_start = timer_sicne_start;
+        }
 
         writer.AddDamageEvent(damageEvent);
 
