@@ -56,7 +56,28 @@ public class Writer : MonoBehaviour
 
     private void _Print(/*string s*/)
     {
-       if (File.Exists("damage.csv"))
+        //Session data
+        if (File.Exists("session_data.csv"))
+        {
+            StreamWriter writer = File.AppendText("session_data.csv");
+
+            writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + Instance.sessionStartTime.ToString("dd/MM/yyyy hh:mm:ss") + ";" + Instance.sessionEndTime.ToString("dd/MM/yyyy hh:mm:ss"));
+
+            writer.Close();
+        }
+        else
+        {
+            StreamWriter writer = File.CreateText("session_data.csv");
+
+            writer.WriteLine("session_id;time_session_start;time_session_end");
+
+            writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + Instance.sessionStartTime.ToString("dd/MM/yyyy hh:mm:ss") + ";" + Instance.sessionEndTime.ToString("dd/MM/yyyy hh:mm:ss"));
+
+            writer.Close();
+        }
+
+        //Damage
+        if (File.Exists("damage.csv"))
        {
            StreamWriter writer = File.AppendText("damage.csv");
       

@@ -6,17 +6,6 @@ public class EventData
 {
     public uint eventID;
     public float seconds_since_start;
-
-    //public string WriteJSON()
-    //{
-    //    string json = JsonUtility.ToJson(this);
-    //    return json;
-    //}
-    //
-    //public EventData GetJSON(string json)
-    //{
-    //    return JsonUtility.FromJson<EventData>(json); //TODO: This probably goes outside the class idk
-    //}
 }
 
 public class DeathEvent : EventData
