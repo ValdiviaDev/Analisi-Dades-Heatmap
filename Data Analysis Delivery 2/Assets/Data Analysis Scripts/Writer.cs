@@ -14,6 +14,7 @@ public class Writer : MonoBehaviour
     // Time
     private DateTime sessionStartTime;
     private DateTime sessionEndTime;
+    float total_time_spent = 0.0f;
 
     private void Awake()
     {
@@ -29,9 +30,11 @@ public class Writer : MonoBehaviour
         Instance.sessionID = GenerateUUID();
     }
 
-    public void SessionFinished()
+    public void SessionFinished(float total_time_spent)
     {
         Instance.sessionEndTime = DateTime.Now;
+        this.total_time_spent = total_time_spent;
+
         Print(); //Serialize data
     }
 
@@ -61,7 +64,7 @@ public class Writer : MonoBehaviour
         {
             StreamWriter writer = File.AppendText("session_data.csv");
 
-            writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + Instance.sessionStartTime.ToString("dd/MM/yyyy hh:mm:ss") + ";" + Instance.sessionEndTime.ToString("dd/MM/yyyy hh:mm:ss"));
+            writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + Instance.total_time_spent + ";" + Instance.sessionStartTime.ToString("dd/MM/yyyy hh:mm:ss") + ";" + Instance.sessionEndTime.ToString("dd/MM/yyyy hh:mm:ss"));
 
             writer.Close();
         }
@@ -69,9 +72,9 @@ public class Writer : MonoBehaviour
         {
             StreamWriter writer = File.CreateText("session_data.csv");
 
-            writer.WriteLine("session_id;time_session_start;time_session_end");
+            writer.WriteLine("session_id;total_time_spent;time_session_start;time_session_end");
 
-            writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + Instance.sessionStartTime.ToString("dd/MM/yyyy hh:mm:ss") + ";" + Instance.sessionEndTime.ToString("dd/MM/yyyy hh:mm:ss"));
+            writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + Instance.total_time_spent + ";" + Instance.sessionStartTime.ToString("dd/MM/yyyy hh:mm:ss") + ";" + Instance.sessionEndTime.ToString("dd/MM/yyyy hh:mm:ss"));
 
             writer.Close();
         }

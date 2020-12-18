@@ -22,24 +22,16 @@ public class SessionEvent : EventData
 public class DamageEvent : EventData
 {
     public Vector3 position;
-
-}
-
-public class TimeSpentEvent : EventData
-{
-    public float total_time_spent;
 }
 
 public class DestroyedCrateEvent : EventData
 {
     public Vector3 position;
-    //public float time_spent;
     public int crates_destroyed;
 }
 
 public class DoorEvent : EventData
 {
-    //public float time_spent;
     public int door_num;
 }
 
@@ -51,7 +43,6 @@ public class AttackEvent : EventData
 
 public class HealingEvent : EventData
 {
-    //public float time_spent;
     public int hearts;
     public int health_num;
 }

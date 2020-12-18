@@ -28,7 +28,7 @@ public class EventHandler : MonoBehaviour
 
     public void EventSessionFinished()
     {
-        writer.SessionFinished();
+        writer.SessionFinished(timer_sicne_start); 
     }
 
     public void NewDamageEvent()
