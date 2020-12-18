@@ -24,11 +24,11 @@ public class EventHandler : MonoBehaviour
     {
         //Increase time each code iteration
         timer_sicne_start += Time.deltaTime;
+    }
 
-        //TODO: Debug: Delete later
-        if (Input.GetKeyDown(KeyCode.P)) { 
-            writer.SessionFinished();
-        }
+    public void EventSessionFinished()
+    {
+        writer.SessionFinished();
     }
 
     public void NewDamageEvent()
