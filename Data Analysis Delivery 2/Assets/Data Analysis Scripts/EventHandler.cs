@@ -26,7 +26,7 @@ public class EventHandler : MonoBehaviour
         timer_sicne_start += Time.deltaTime;
 
         //TODO: Debug: Delete later
-        if (Input.GetKey(KeyCode.P)) { 
+        if (Input.GetKeyDown(KeyCode.P)) { 
             writer.SessionFinished();
         }
     }

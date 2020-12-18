@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EventData : MonoBehaviour
+public class EventData
 {
     public uint eventID;
     public float seconds_since_start;
