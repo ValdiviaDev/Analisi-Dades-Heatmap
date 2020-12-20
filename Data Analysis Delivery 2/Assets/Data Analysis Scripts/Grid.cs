@@ -16,6 +16,10 @@ public class Grid : MonoBehaviour
     private Dictionary<Vector2, GameObject> cubes_heatmap;
     public GameObject grid_parent;
     public GameObject HeatMapCube;
+    public Material matCube;
+    public Gradient gradient;
+    public GradientColorKey[] colorKey;
+    public GradientAlphaKey[] alphaKey;
 
     float timer = 0.0f;
     float posx = 0.0f;
@@ -50,7 +54,7 @@ public class Grid : MonoBehaviour
             for (int y = 0; y < gridArray.GetLength(1); y++)
             {
 
-                debugTextArray[x, y] = CreateWorldText(gridArray[x, y].ToString(), GetWorldPos(x, y) + new Vector3(cubeSize, 0, cubeSize) * 0.5f, 10, Color.green, TextAnchor.MiddleCenter);
+                debugTextArray[x, y] = CreateWorldText(gridArray[x, y].ToString(), GetWorldPos(x, y) + new Vector3(cubeSize, 0, cubeSize) * 0.5f, 1, Color.green, TextAnchor.MiddleCenter);
                 //Debug.DrawLine(GetWorldPos(x, y), GetWorldPos(x, y + 1), Color.red, 100f);
                 //Debug.DrawLine(GetWorldPos(x, y), GetWorldPos(x + 1, y), Color.red, 100f);
 
@@ -165,23 +169,24 @@ public class Grid : MonoBehaviour
             go.transform.SetParent(grid_parent.transform);
             go.transform.localScale *= cubeSize;
             cubes_heatmap.Add(gridPos, go);
-            //go.GetComponent<MeshRenderer>().material = Instantiate(Resources.Load("_Materials/HeatMapCube") as Material);
+            go.GetComponent<MeshRenderer>().material = matCube;
 
 
 
         }
 
-        //if (go)
-        //{
-        //    float val = GetValue(x, y) * 0.01f;
+        if (go)
+        {
 
-        //    Color c = go.GetComponent<Grad>().gradient.Evaluate(val);
+            float val = GetValue(x, y) * 0.01f;
 
-        //    Debug.Log("Val: " + val.ToString() + "Color" + c.ToString());
+            Color c = gradient.Evaluate(val);
 
-        //    go.GetComponent<MeshRenderer>().material.color = c;
+            Debug.Log("Val: " + val.ToString() + "Color" + c.ToString());
 
-        //}
+            go.GetComponent<MeshRenderer>().material.color = c;
+
+        }
     }
 
     public void SetCSVValues()
