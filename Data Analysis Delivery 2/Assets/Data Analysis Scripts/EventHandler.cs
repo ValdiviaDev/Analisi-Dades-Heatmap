@@ -13,6 +13,7 @@ public class EventHandler : MonoBehaviour
     private int HealthTimesCount = 0;
     private int DestroyCrateCount = 0;
     private int DoorOpenCount = 0;
+    private int[,] positions;
 
     //Time in seconds
     float timer_since_start = 0.0f;
@@ -142,5 +143,21 @@ public class EventHandler : MonoBehaviour
          writer.AddDoorEvent(doorEvent);
 
      }
+    public void NewPositionsEvent()
+    {
+        PositionEvent positionEvent = new PositionEvent();
+
+        if (player)
+        {
+            positionEvent.position.x = player.transform.position.x;
+            positionEvent.position.y = player.transform.position.y;
+            positionEvent.position.z = player.transform.position.z;
+
+        }
+
+        writer.AddPositionEvent(positionEvent);
+
+    }
+
 
 }

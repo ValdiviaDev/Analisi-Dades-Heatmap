@@ -153,7 +153,7 @@ public class Writer : MonoBehaviour
        }
        else
        {
-           StreamWriter writer = File.CreateText("damage.csv");
+           StreamWriter writer = File.CreateText("Assets/damage.csv");
       
            writer.WriteLine("session_id;event_id;seconds_since_start;position_x;position_y;position_z");
       
@@ -316,6 +316,7 @@ public class Writer : MonoBehaviour
 
             foreach (PositionEvent pos_aux in Instance.posEvent)
             {
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") +  ";" + pos_aux.seconds_since_start + ";" + pos_aux.position.x + ";" + pos_aux.position.y + ";" + pos_aux.position.z);
                 writer.WriteLine(Instance.sessionID.ToString("0000000000") +  ";" + pos_aux.seconds_since_start + ";" + pos_aux.position.x + ";" + pos_aux.position.y + ";" + pos_aux.position.z);
             }
             writer.Close();

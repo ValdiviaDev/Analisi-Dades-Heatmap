@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System.Text;
+using System.Globalization;
 
 public class Grid : MonoBehaviour
 {
@@ -12,7 +15,9 @@ public class Grid : MonoBehaviour
     private TextMesh[,] debugTextArray;
     private Dictionary<Vector2, GameObject> cubes_heatmap;
     public GameObject grid_parent;
+    public GameObject HeatMapCube;
 
+    float timer = 0.0f;
     float posx = 0.0f;
     float posy = 0.0f;
     float posz = 0.0f;
@@ -23,7 +28,7 @@ public class Grid : MonoBehaviour
         debugTextArray = new TextMesh[width, height];
 
         SetGrid();
-        //SetCSVValues();
+        SetCSVValues();
     }
 
     public Grid(int w, int h, float size)
@@ -162,11 +167,11 @@ public class Grid : MonoBehaviour
             //Fail
 
 
-            go = Instantiate(Resources.Load("_Prefabs/CubeHeatMap") as GameObject, new Vector3(x * cubeSize + cubeSize / 2, 1, y * cubeSize + cubeSize / 2), Quaternion.identity);
+            go = Instantiate(HeatMapCube, new Vector3(x * cubeSize + cubeSize / 2, 1, y * cubeSize + cubeSize / 2), Quaternion.identity);
             go.transform.SetParent(this.gameObject.transform);
             go.transform.localScale *= cubeSize;
             cubes_heatmap.Add(gridPos, go);
-            go.GetComponent<MeshRenderer>().material = Instantiate(Resources.Load("_Materials/HeatMapCube") as Material);
+            //go.GetComponent<MeshRenderer>().material = Instantiate(Resources.Load("_Materials/HeatMapCube") as Material);
 
 
 
@@ -185,6 +190,70 @@ public class Grid : MonoBehaviour
         //}
     }
 
+    public void SetCSVValues()
+    {
+
+        if (System.IO.File.Exists("positions.csv"))
+        {
+
+            List<string> stringList = new List<string>();
+            List<string[]> parsedList = new List<string[]>();
+            // List<Vector3> pos_list = new List<Vector3>();
+
+            StreamReader str_reader = new StreamReader("positions.csv");
+            while (!str_reader.EndOfStream)
+            {
+                string line = str_reader.ReadLine();
+                stringList.Add(line);
+
+            }
+            str_reader.Close();
+
+            for (int i = 1; i < stringList.Count; i++)
+            {
+                string[] temp = stringList[i].Split(';');
+
+                for (int j = 0; j < temp.Length; j++)
+                {
+                    temp[j] = temp[j].Trim();
+
+                    if (j == 3)
+                    {
+                        posx = float.Parse(temp[j]);
+
+                    }
+
+                    if (j == 4)
+                    {
+                        posy = float.Parse(temp[j]);
+                    }
+
+                    if (j == 5)
+                    {
+                        posz = float.Parse(temp[j]);
+                    }
+
+                    Vector3 pos = new Vector3
+                    (
+                        posx,
+                        posy,
+                        posz
+                    );
+
+                    SetValue(pos, GetValue(pos) + 5);
+
+                    int x, y;
+                    GetXY(pos, out x, out y);
+                    UpdateHeatmap(x, y);
+
+                }
+
+                parsedList.Add(temp);
+
+            }
+        }
+
+    }
     // Update is called once per frame
     void Update()
     {
