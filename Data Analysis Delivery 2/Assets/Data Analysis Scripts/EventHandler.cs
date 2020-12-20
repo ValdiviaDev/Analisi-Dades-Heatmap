@@ -14,6 +14,10 @@ public class EventHandler : MonoBehaviour
     //Time in seconds
     float timer_sicne_start = 0.0f;
 
+    //Timer for the position update
+    float time_pos_update = 0.3f;
+    float counter_pos_update = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +30,25 @@ public class EventHandler : MonoBehaviour
     {
         //Increase time each code iteration
         timer_sicne_start += Time.deltaTime;
+
+        counter_pos_update += Time.deltaTime;
+        if (counter_pos_update >= time_pos_update)
+        {
+            SendPosToWriter();
+            counter_pos_update = 0.0f;
+        }
+        
+    }
+
+    public void SendPosToWriter()
+    {
+        PositionEvent positionEvent = new PositionEvent();
+
+        positionEvent.seconds_since_start = timer_sicne_start;
+        positionEvent.position = player.transform.position;
+
+        writer.AddPositionEvent(positionEvent);
+
     }
 
     public void EventSessionFinished()

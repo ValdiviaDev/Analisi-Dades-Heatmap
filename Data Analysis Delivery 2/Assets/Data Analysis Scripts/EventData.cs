@@ -19,6 +19,11 @@ public class SessionEvent : EventData
     string userName;
 }
 
+public class PositionEvent : EventData
+{
+    public Vector3 position;
+}
+
 public class DamageEvent : EventData
 {
     public Vector3 position;
