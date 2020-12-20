@@ -9,15 +9,14 @@ public class Writer : MonoBehaviour
     public static Writer Instance;
     private uint sessionID = 0u;
 
+    private List<PositionEvent> posEvent = new List<PositionEvent>();
+
     private List<DamageEvent> damageList = new List<DamageEvent>();
     private List<DeathEvent> deathList = new List<DeathEvent>();
     private List<HealingEvent> healingList = new List<HealingEvent>();
     private List<DestroyCrateEvent> destroyList = new List<DestroyCrateEvent>();
     private List<DoorEvent> doorList = new List<DoorEvent>();
     private List<KillEvent> killList = new List<KillEvent>();
-
-
-
 
     // Time
     private DateTime sessionStartTime;
@@ -49,6 +48,14 @@ public class Writer : MonoBehaviour
     public static uint GenerateUUID()
     {
         return BitConverter.ToUInt32(Guid.NewGuid().ToByteArray(), 0);
+    }
+
+    public void AddPositionEvent(PositionEvent pos)
+    {
+        if(posEvent != null)
+        {
+            Instance.posEvent.Add(pos);
+        }
     }
 
     public void AddDamageEvent(DamageEvent damage)
@@ -289,6 +296,31 @@ public class Writer : MonoBehaviour
             }
             writer.Close();
         }
+
+        if (File.Exists("positions.csv"))
+        {
+            StreamWriter writer = File.AppendText("positions.csv");
+
+            foreach (PositionEvent pos_aux in Instance.posEvent)
+            {
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + pos_aux.seconds_since_start + ";" + pos_aux.position.x + ";" + pos_aux.position.y + ";" + pos_aux.position.z);
+            }
+
+            writer.Close();
+        }
+        else
+        {
+            StreamWriter writer = File.CreateText("positions.csv");
+
+            writer.WriteLine("session_id;seconds_since_start;position_x;position_y;position_z");
+
+            foreach (PositionEvent pos_aux in Instance.posEvent)
+            {
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") +  ";" + pos_aux.seconds_since_start + ";" + pos_aux.position.x + ";" + pos_aux.position.y + ";" + pos_aux.position.z);
+            }
+            writer.Close();
+        }
+
     }
 
 

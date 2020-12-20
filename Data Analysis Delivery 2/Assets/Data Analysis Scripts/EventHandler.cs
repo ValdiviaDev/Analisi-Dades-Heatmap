@@ -17,6 +17,10 @@ public class EventHandler : MonoBehaviour
     //Time in seconds
     float timer_since_start = 0.0f;
 
+    //Timer for the position update
+    float time_pos_update = 0.3f;
+    float counter_pos_update = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
