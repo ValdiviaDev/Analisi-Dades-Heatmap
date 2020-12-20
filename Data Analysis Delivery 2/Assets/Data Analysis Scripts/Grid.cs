@@ -21,7 +21,6 @@ public class Grid : MonoBehaviour
     public GradientColorKey[] colorKey;
     public GradientAlphaKey[] alphaKey;
 
-    float timer = 0.0f;
     float posx = 0.0f;
     float posy = 0.0f;
     float posz = 0.0f;
@@ -40,41 +39,19 @@ public class Grid : MonoBehaviour
         this.width = w;
         this.height = h;
         cubeSize = size;
-
     }
 
     private void SetGrid()
     {
-
-
-
-
         for (int x = 0; x < gridArray.GetLength(0); x++)
         {
             for (int y = 0; y < gridArray.GetLength(1); y++)
             {
-
-                debugTextArray[x, y] = CreateWorldText(gridArray[x, y].ToString(), GetWorldPos(x, y) + new Vector3(cubeSize, 0, cubeSize) * 0.5f, 1, Color.green, TextAnchor.MiddleCenter);
-                //Debug.DrawLine(GetWorldPos(x, y), GetWorldPos(x, y + 1), Color.red, 100f);
-                //Debug.DrawLine(GetWorldPos(x, y), GetWorldPos(x + 1, y), Color.red, 100f);
-
-            }
-
-        }
-
-        for (int x = (int)grid_parent.transform.position.x -1 ; x < (int)grid_parent.transform.position.x + 129; x++)
-        {
-            for (int y = (int)grid_parent.transform.position.z -1; y < (int)grid_parent.transform.position.z + 79; y++)
-            {
-
-               
+                debugTextArray[x, y] = CreateWorldText(gridArray[x, y].ToString(), GetWorldPos(x, y) + new Vector3(cubeSize, 0, cubeSize) * 0.5f, 10, Color.green, TextAnchor.MiddleCenter);
                 Debug.DrawLine(GetWorldPos(x, y), GetWorldPos(x, y + 1), Color.red, 100f);
                 Debug.DrawLine(GetWorldPos(x, y), GetWorldPos(x + 1, y), Color.red, 100f);
-
             }
-
         }
-
     }
 
     private Vector3 GetWorldPos(int x, int y)
@@ -104,7 +81,6 @@ public class Grid : MonoBehaviour
             gridArray[x, y] = val;
             debugTextArray[x, y].text = gridArray[x, y].ToString();
         }
-
     }
 
     public void SetValue(Vector3 worldPos, int value)
@@ -112,24 +88,19 @@ public class Grid : MonoBehaviour
         int x, y;
         GetXY(worldPos, out x, out y);
         SetValue(x, y, value);
-
-
     }
 
     private void GetXY(Vector3 worldPos, out int x, out int y)
     {
         x = Mathf.FloorToInt(worldPos.x / cubeSize);
         y = Mathf.FloorToInt(worldPos.z / cubeSize);
-
     }
-
 
     public int GetValue(int x, int y)
     {
         if (x >= 0 && y >= 0 && x < width && y < height)
         {
             return gridArray[x, y];
-
         }
         else
         {
@@ -137,14 +108,12 @@ public class Grid : MonoBehaviour
         }
     }
 
-
     public int GetValue(Vector3 worldPosition)
     {
         int x, y;
         GetXY(worldPosition, out x, out y);
 
         return GetValue(x, y);
-
     }
     private void UpdateHeatmap(int x, int y)
     {
@@ -154,30 +123,19 @@ public class Grid : MonoBehaviour
 
         if (cubes_heatmap.TryGetValue(gridPos, out go))
         {
-
             Vector3[] points = new Vector3[5];
-
-
         }
         else
         {
-
-            //Fail
-
-
             go = Instantiate(HeatMapCube, new Vector3(x * cubeSize + cubeSize / 2, 1, y * cubeSize + cubeSize / 2), Quaternion.identity);
             go.transform.SetParent(grid_parent.transform);
             go.transform.localScale *= cubeSize;
             cubes_heatmap.Add(gridPos, go);
             go.GetComponent<MeshRenderer>().material = matCube;
-
-
-
         }
 
         if (go)
         {
-
             float val = GetValue(x, y) * 0.01f;
 
             Color c = gradient.Evaluate(val);
@@ -185,7 +143,6 @@ public class Grid : MonoBehaviour
             Debug.Log("Val: " + val.ToString() + "Color" + c.ToString());
 
             go.GetComponent<MeshRenderer>().material.color = c;
-
         }
     }
 
@@ -194,7 +151,6 @@ public class Grid : MonoBehaviour
 
         if (System.IO.File.Exists("Assets/CSV/positions.csv"))
         {
-
             List<string> stringList = new List<string>();
             List<string[]> parsedList = new List<string[]>();
             // List<Vector3> pos_list = new List<Vector3>();
@@ -204,7 +160,6 @@ public class Grid : MonoBehaviour
             {
                 string line = str_reader.ReadLine();
                 stringList.Add(line);
-
             }
             str_reader.Close();
 
@@ -244,14 +199,10 @@ public class Grid : MonoBehaviour
                     int x, y;
                     GetXY(pos, out x, out y);
                     UpdateHeatmap(x, y);
-
                 }
-
                 parsedList.Add(temp);
-
             }
         }
-
     }
     // Update is called once per frame
     void Update()
