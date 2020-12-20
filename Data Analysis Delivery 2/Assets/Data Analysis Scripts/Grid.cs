@@ -47,9 +47,9 @@ public class Grid : MonoBehaviour
         {
             for (int y = 0; y < gridArray.GetLength(1); y++)
             {
-                debugTextArray[x, y] = CreateWorldText(gridArray[x, y].ToString(), GetWorldPos(x, y) + new Vector3(cubeSize, 0, cubeSize) * 0.5f, 10, Color.green, TextAnchor.MiddleCenter);
-                Debug.DrawLine(GetWorldPos(x, y), GetWorldPos(x, y + 1), Color.red, 100f);
-                Debug.DrawLine(GetWorldPos(x, y), GetWorldPos(x + 1, y), Color.red, 100f);
+                debugTextArray[x, y] = CreateWorldText(gridArray[x, y].ToString(), GetWorldPos(x, y) + new Vector3(cubeSize, 0, cubeSize) * 0.5f, 1, Color.blue, TextAnchor.MiddleCenter);
+                //Debug.DrawLine(GetWorldPos(x, y), GetWorldPos(x, y + 1), Color.white, 100f);
+                //Debug.DrawLine(GetWorldPos(x, y), GetWorldPos(x + 1, y), Color.white, 100f);
             }
         }
     }
@@ -127,7 +127,7 @@ public class Grid : MonoBehaviour
         }
         else
         {
-            go = Instantiate(HeatMapCube, new Vector3(x * cubeSize + cubeSize / 2, 1, y * cubeSize + cubeSize / 2), Quaternion.identity);
+            go = Instantiate(HeatMapCube, new Vector3(x * cubeSize + cubeSize / 2, 20, y * cubeSize + cubeSize / 2), Quaternion.identity);
             go.transform.SetParent(grid_parent.transform);
             go.transform.localScale *= cubeSize;
             cubes_heatmap.Add(gridPos, go);
