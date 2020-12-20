@@ -10,6 +10,7 @@ public class Writer : MonoBehaviour
     private uint sessionID = 0u;
 
     private List<DamageEvent> damageList = new List<DamageEvent>();
+    private List<DeathEvent> deathList = new List<DeathEvent>();
 
     // Time
     private DateTime sessionStartTime;
@@ -49,6 +50,15 @@ public class Writer : MonoBehaviour
         {
             damage.eventID = GenerateUUID();
             Instance.damageList.Add(damage);
+        }
+    }
+
+    public void AddDeathEvent(DeathEvent death)
+    {
+        if (death != null)
+        {
+            death.eventID = GenerateUUID();
+            Instance.deathList.Add(death);
         }
     }
 
@@ -103,6 +113,34 @@ public class Writer : MonoBehaviour
            }
            writer.Close();
        }
+
+        //Death
+
+
+        if (File.Exists("death.csv"))
+        {
+            StreamWriter writer = File.AppendText("death.csv");
+
+            foreach (DeathEvent death in Instance.deathList)
+            {
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + death.eventID.ToString("0000000000") + ";" + death.seconds_since_start + ";" + death.position.x + ";" + death.position.y + ";" + death.position.z + ";" + death.eulerAngles.x + ";" + death.eulerAngles.y + ";" + death.eulerAngles.z);
+            }
+
+            writer.Close();
+        }
+        else
+        {
+            StreamWriter writer = File.CreateText("death.csv");
+
+            writer.WriteLine("session_id;event_id;seconds_since_start;position_x;position_y;position_z;euler_x;euler_y;euler_z");
+
+            foreach (DeathEvent death in Instance.deathList)
+            {
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + death.eventID.ToString("0000000000") + ";" + death.seconds_since_start + ";" + death.position.x + ";" + death.position.y + ";" + death.position.z + death.eulerAngles.x + ";" + death.eulerAngles.y + ";" + death.eulerAngles.z);
+            }
+            writer.Close();
+        }
+
     }
 
 

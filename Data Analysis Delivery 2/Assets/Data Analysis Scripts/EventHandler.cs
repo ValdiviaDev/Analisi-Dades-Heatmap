@@ -45,4 +45,18 @@ public class EventHandler : MonoBehaviour
 
     }
 
+    public void NewDeathEvent()
+    {
+        DeathEvent deathEvent   = new DeathEvent();
+
+        if (player)
+        {
+            deathEvent.position = player.transform.position;
+            deathEvent.eulerAngles = player.transform.eulerAngles;
+        }
+
+        writer.AddDeathEvent(deathEvent);
+
+    }
+
 }
