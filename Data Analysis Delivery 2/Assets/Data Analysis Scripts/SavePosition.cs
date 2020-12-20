@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class SavePosition : MonoBehaviour
 {
-    public EventHandler eventhandler = null;
+    private EventHandler eventhandler = null;
     float timer = 0.0f;
     public float time2save = 0.3f;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        eventhandler = GetComponent<EventHandler>();
     }
 
     // Update is called once per frame

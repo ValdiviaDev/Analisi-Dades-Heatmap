@@ -18,10 +18,6 @@ public class EventHandler : MonoBehaviour
     //Time in seconds
     float timer_since_start = 0.0f;
 
-    //Timer for the position update
-    float time_pos_update = 0.3f;
-    float counter_pos_update = 0.0f;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -149,6 +145,8 @@ public class EventHandler : MonoBehaviour
 
         if (player)
         {
+            positionEvent.seconds_since_start = timer_since_start;
+
             positionEvent.position.x = player.transform.position.x;
             positionEvent.position.y = player.transform.position.y;
             positionEvent.position.z = player.transform.position.z;

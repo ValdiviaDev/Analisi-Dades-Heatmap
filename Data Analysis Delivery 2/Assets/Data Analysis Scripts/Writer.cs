@@ -112,17 +112,19 @@ public class Writer : MonoBehaviour
         }
     }
 
-    public static void Print(/*string s*/)
+    public static void Print()
     {
         Instance._Print();
     }
 
-    private void _Print(/*string s*/)
+    private void _Print()
     {
+        string parent_path = "Assets/CSV/";
+
         //Session data
-        if (File.Exists("session_data.csv"))
+        if (File.Exists(parent_path + "session_data.csv"))
         {
-            StreamWriter writer = File.AppendText("session_data.csv");
+            StreamWriter writer = File.AppendText(parent_path + "session_data.csv");
 
             writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + Instance.total_time_spent + ";" + Instance.sessionStartTime.ToString("dd/MM/yyyy hh:mm:ss") + ";" + Instance.sessionEndTime.ToString("dd/MM/yyyy hh:mm:ss"));
 
@@ -130,7 +132,7 @@ public class Writer : MonoBehaviour
         }
         else
         {
-            StreamWriter writer = File.CreateText("session_data.csv");
+            StreamWriter writer = File.CreateText(parent_path + "session_data.csv");
 
             writer.WriteLine("session_id;total_time_spent;time_session_start;time_session_end");
 
@@ -140,9 +142,9 @@ public class Writer : MonoBehaviour
         }
 
         //Damage
-        if (File.Exists("damage.csv"))
+        if (File.Exists(parent_path + "damage.csv"))
        {
-           StreamWriter writer = File.AppendText("damage.csv");
+           StreamWriter writer = File.AppendText(parent_path + "damage.csv");
       
            foreach (DamageEvent damage in Instance.damageList)
            {
@@ -153,7 +155,7 @@ public class Writer : MonoBehaviour
        }
        else
        {
-           StreamWriter writer = File.CreateText("Assets/damage.csv");
+           StreamWriter writer = File.CreateText(parent_path + "damage.csv");
       
            writer.WriteLine("session_id;event_id;seconds_since_start;position_x;position_y;position_z");
       
@@ -167,9 +169,9 @@ public class Writer : MonoBehaviour
         //Death
 
 
-        if (File.Exists("death.csv"))
+        if (File.Exists(parent_path + "death.csv"))
         {
-            StreamWriter writer = File.AppendText("death.csv");
+            StreamWriter writer = File.AppendText(parent_path + "death.csv");
 
             foreach (DeathEvent death in Instance.deathList)
             {
@@ -180,7 +182,7 @@ public class Writer : MonoBehaviour
         }
         else
         {
-            StreamWriter writer = File.CreateText("death.csv");
+            StreamWriter writer = File.CreateText(parent_path + "death.csv");
 
             writer.WriteLine("session_id;event_id;seconds_since_start;position_x;position_y;position_z;euler_x;euler_y;euler_z");
 
@@ -194,9 +196,9 @@ public class Writer : MonoBehaviour
         //Kill
 
 
-        if (File.Exists("enemieskill.csv"))
+        if (File.Exists(parent_path + "enemieskill.csv"))
         {
-            StreamWriter writer = File.AppendText("enemieskill.csv");
+            StreamWriter writer = File.AppendText(parent_path + "enemieskill.csv");
 
             foreach (KillEvent kill in Instance.killList)
             {
@@ -207,7 +209,7 @@ public class Writer : MonoBehaviour
         }
         else
         {
-            StreamWriter writer = File.CreateText("enemieskill.csv");
+            StreamWriter writer = File.CreateText(parent_path + "enemieskill.csv");
 
             writer.WriteLine("session_id;event_id;seconds_since_start;enemies_killed;");
 
@@ -221,9 +223,9 @@ public class Writer : MonoBehaviour
 
         //Healing
 
-        if (File.Exists("healing.csv"))
+        if (File.Exists(parent_path + "healing.csv"))
         {
-            StreamWriter writer = File.AppendText("healing.csv");
+            StreamWriter writer = File.AppendText(parent_path + "healing.csv");
 
             foreach (HealingEvent healing in Instance.healingList)
             {
@@ -234,7 +236,7 @@ public class Writer : MonoBehaviour
         }
         else
         {
-            StreamWriter writer = File.CreateText("healing.csv");
+            StreamWriter writer = File.CreateText(parent_path + "healing.csv");
 
             writer.WriteLine("session_id;event_id;seconds_since_start;health_num;");
 
@@ -247,9 +249,9 @@ public class Writer : MonoBehaviour
 
         //DestroyCrate
 
-        if (File.Exists("destroy_crate.csv"))
+        if (File.Exists(parent_path + "destroy_crate.csv"))
         {
-            StreamWriter writer = File.AppendText("destroy_crate.csv");
+            StreamWriter writer = File.AppendText(parent_path + "destroy_crate.csv");
 
             foreach (DestroyCrateEvent destroy in Instance.destroyList)
             {
@@ -260,7 +262,7 @@ public class Writer : MonoBehaviour
         }
         else
         {
-            StreamWriter writer = File.CreateText("destroy_crate.csv");
+            StreamWriter writer = File.CreateText(parent_path + "destroy_crate.csv");
 
             writer.WriteLine("session_id;event_id;position_x;position_y;position_z;seconds_since_start;crates_destroyed");
 
@@ -273,9 +275,9 @@ public class Writer : MonoBehaviour
 
         //Door Event
 
-        if (File.Exists("door.csv"))
+        if (File.Exists(parent_path + "door.csv"))
         {
-            StreamWriter writer = File.AppendText("door.csv");
+            StreamWriter writer = File.AppendText(parent_path + "door.csv");
 
             foreach (DoorEvent door in Instance.doorList)
             {
@@ -286,7 +288,7 @@ public class Writer : MonoBehaviour
         }
         else
         {
-            StreamWriter writer = File.CreateText("door.csv");
+            StreamWriter writer = File.CreateText(parent_path + "door.csv");
 
             writer.WriteLine("session_id;event_id;seconds_since_start;door_num");
 
@@ -297,9 +299,9 @@ public class Writer : MonoBehaviour
             writer.Close();
         }
 
-        if (File.Exists("positions.csv"))
+        if (File.Exists(parent_path + "positions.csv"))
         {
-            StreamWriter writer = File.AppendText("positions.csv");
+            StreamWriter writer = File.AppendText(parent_path + "positions.csv");
 
             foreach (PositionEvent pos_aux in Instance.posEvent)
             {
@@ -310,7 +312,7 @@ public class Writer : MonoBehaviour
         }
         else
         {
-            StreamWriter writer = File.CreateText("positions.csv");
+            StreamWriter writer = File.CreateText(parent_path + "positions.csv");
 
             writer.WriteLine("session_id;seconds_since_start;position_x;position_y;position_z");
 
