@@ -127,7 +127,7 @@ public class Grid : MonoBehaviour
         }
         else
         {
-            go = Instantiate(HeatMapCube, new Vector3(x * cubeSize + cubeSize / 2, 20, y * cubeSize + cubeSize / 2), Quaternion.identity);
+            go = Instantiate(HeatMapCube, new Vector3(x * cubeSize + cubeSize / 2, 2, y * cubeSize + cubeSize / 2), Quaternion.identity);
             go.transform.SetParent(grid_parent.transform);
             go.transform.localScale *= cubeSize;
             cubes_heatmap.Add(gridPos, go);
