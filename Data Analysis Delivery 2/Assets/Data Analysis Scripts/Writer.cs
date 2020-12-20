@@ -11,10 +11,12 @@ public class Writer : MonoBehaviour
 
     private List<DamageEvent> damageList = new List<DamageEvent>();
     private List<DeathEvent> deathList = new List<DeathEvent>();
-    private List<AttackEvent> attackList = new List<AttackEvent>();
     private List<HealingEvent> healingList = new List<HealingEvent>();
     private List<DestroyCrateEvent> destroyList = new List<DestroyCrateEvent>();
     private List<DoorEvent> doorList = new List<DoorEvent>();
+    private List<KillEvent> killList = new List<KillEvent>();
+
+
 
 
     // Time
@@ -67,12 +69,12 @@ public class Writer : MonoBehaviour
         }
     }
 
-    public void AddAttackEvent(AttackEvent attack)
+    public void AddKillEvent(KillEvent kill)
     {
-        if (attack != null)
+        if (kill != null)
         {
-            attack.eventID = GenerateUUID();
-            Instance.attackList.Add(attack);
+            kill.eventID = GenerateUUID();
+            Instance.killList.Add(kill);
         }
     }
 
@@ -182,29 +184,29 @@ public class Writer : MonoBehaviour
             writer.Close();
         }
 
-        //Attack
+        //Kill
 
 
-        if (File.Exists("attack.csv"))
+        if (File.Exists("enemieskill.csv"))
         {
-            StreamWriter writer = File.AppendText("attack.csv");
+            StreamWriter writer = File.AppendText("enemieskill.csv");
 
-            foreach (AttackEvent attack in Instance.attackList)
+            foreach (KillEvent kill in Instance.killList)
             {
-                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + attack.eventID.ToString("0000000000") + ";" + attack.attacks_num + ";" + attack.enemies_killed);
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + kill.eventID.ToString("0000000000") + ";" + kill.seconds_since_start + ";" + kill.enemies_killed);
             }
 
             writer.Close();
         }
         else
         {
-            StreamWriter writer = File.CreateText("attack.csv");
+            StreamWriter writer = File.CreateText("enemieskill.csv");
 
-            writer.WriteLine("session_id;event_id;seconds_since_start;attacks_num;enemies_killed;");
+            writer.WriteLine("session_id;event_id;seconds_since_start;enemies_killed;");
 
-            foreach (AttackEvent attack in Instance.attackList)
+            foreach (KillEvent kill in Instance.killList)
             {
-                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + attack.eventID.ToString("0000000000") + ";" + attack.attacks_num + ";" + attack.enemies_killed);
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + kill.eventID.ToString("0000000000") + ";" + kill.seconds_since_start + ";" + kill.enemies_killed);
             }
             writer.Close();
         }
@@ -225,7 +227,7 @@ public class Writer : MonoBehaviour
         }
         else
         {
-            StreamWriter writer = File.CreateText("attack.csv");
+            StreamWriter writer = File.CreateText("healing.csv");
 
             writer.WriteLine("session_id;event_id;seconds_since_start;hearts;health_num;");
 

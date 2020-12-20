@@ -9,6 +9,8 @@ public class EventHandler : MonoBehaviour
     public GameObject player;
     private Writer writer;
 
+    private int EnemyKillCount = 0;
+
     //Time in seconds
     float timer_sicne_start = 0.0f;
 
@@ -63,20 +65,22 @@ public class EventHandler : MonoBehaviour
 
     }
 
-    //Attack
-    /*public void NewAttackEvent()
+    //Kill
+    
+    public void NewKillEnemiesEvent()
     {
-        AttackEvent attackEvent = new AttackEvent();
+        KillEvent attackEvent = new KillEvent();
 
         if (player)
         {
-            attackEvent.attacks_num = 
-            attackEvent.enemies_killed = ;
+            EnemyKillCount++;
+            attackEvent.seconds_since_start = timer_sicne_start;
+            attackEvent.enemies_killed = EnemyKillCount;
         }
 
-        writer.AddAttackEvent(attackEvent);
+        writer.AddKillEvent(attackEvent);
 
-    }*/
+    }
 
     //Healing
     /*
@@ -111,5 +115,20 @@ public class EventHandler : MonoBehaviour
 
     }
     */
+
+    //Door Event
+    /* public void NewDoorEvent()
+     {
+         DoorEvent doorEvent = new DoorEvent();
+
+         if (player)
+         {
+             doorEvent.door_num =;
+
+         }
+
+         writer.AddDoorEvent(doorEvent);
+
+     }*/
 
 }
