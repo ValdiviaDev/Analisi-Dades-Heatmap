@@ -11,6 +11,11 @@ public class Writer : MonoBehaviour
 
     private List<DamageEvent> damageList = new List<DamageEvent>();
     private List<DeathEvent> deathList = new List<DeathEvent>();
+    private List<AttackEvent> attackList = new List<AttackEvent>();
+    private List<HealingEvent> healingList = new List<HealingEvent>();
+    private List<DestroyCrateEvent> destroyList = new List<DestroyCrateEvent>();
+    private List<DoorEvent> doorList = new List<DoorEvent>();
+
 
     // Time
     private DateTime sessionStartTime;
@@ -59,6 +64,42 @@ public class Writer : MonoBehaviour
         {
             death.eventID = GenerateUUID();
             Instance.deathList.Add(death);
+        }
+    }
+
+    public void AddAttackEvent(AttackEvent attack)
+    {
+        if (attack != null)
+        {
+            attack.eventID = GenerateUUID();
+            Instance.attackList.Add(attack);
+        }
+    }
+
+    public void AddHealingEvent(HealingEvent healing)
+    {
+        if (healing != null)
+        {
+            healing.eventID = GenerateUUID();
+            Instance.healingList.Add(healing);
+        }
+    }
+
+    public void AddDestroyCrateEvent(DestroyCrateEvent destroy)
+    {
+        if (destroy != null)
+        {
+            destroy.eventID = GenerateUUID();
+            Instance.destroyList.Add(destroy);
+        }
+    }
+
+    public void AddDoorEvent(DoorEvent door)
+    {
+        if (door != null)
+        {
+            door.eventID = GenerateUUID();
+            Instance.doorList.Add(door);
         }
     }
 
@@ -141,6 +182,111 @@ public class Writer : MonoBehaviour
             writer.Close();
         }
 
+        //Attack
+
+
+        if (File.Exists("attack.csv"))
+        {
+            StreamWriter writer = File.AppendText("attack.csv");
+
+            foreach (AttackEvent attack in Instance.attackList)
+            {
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + attack.eventID.ToString("0000000000") + ";" + attack.attacks_num + ";" + attack.enemies_killed);
+            }
+
+            writer.Close();
+        }
+        else
+        {
+            StreamWriter writer = File.CreateText("attack.csv");
+
+            writer.WriteLine("session_id;event_id;seconds_since_start;attacks_num;enemies_killed;");
+
+            foreach (AttackEvent attack in Instance.attackList)
+            {
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + attack.eventID.ToString("0000000000") + ";" + attack.attacks_num + ";" + attack.enemies_killed);
+            }
+            writer.Close();
+        }
+
+
+        //Healing
+
+        if (File.Exists("healing.csv"))
+        {
+            StreamWriter writer = File.AppendText("healing.csv");
+
+            foreach (HealingEvent healing in Instance.healingList)
+            {
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + healing.eventID.ToString("0000000000") + ";" + healing.hearts + ";" + healing.health_num);
+            }
+
+            writer.Close();
+        }
+        else
+        {
+            StreamWriter writer = File.CreateText("attack.csv");
+
+            writer.WriteLine("session_id;event_id;seconds_since_start;hearts;health_num;");
+
+            foreach (HealingEvent healing in Instance.healingList)
+            {
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + healing.eventID.ToString("0000000000") + ";" + healing.hearts + ";" + healing.health_num);
+            }
+            writer.Close();
+        }
+
+        //DestroyCrate
+
+        if (File.Exists("destroy_crate.csv"))
+        {
+            StreamWriter writer = File.AppendText("destroy_crate.csv");
+
+            foreach (DestroyCrateEvent destroy in Instance.destroyList)
+            {
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + destroy.eventID.ToString("0000000000") + ";" + destroy.crates_destroyed + ";" + destroy.position.x + ";" + destroy.position.y + ";" + destroy.position.z);
+            }
+
+            writer.Close();
+        }
+        else
+        {
+            StreamWriter writer = File.CreateText("destroy_crate.csv");
+
+            writer.WriteLine("session_id;event_id;crates_destroyed;position_x;position_y;position_z;");
+
+            foreach (DestroyCrateEvent destroy in Instance.destroyList)
+            {
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + destroy.eventID.ToString("0000000000") + ";" + destroy.crates_destroyed + ";" + destroy.position.x + ";" + destroy.position.y + ";" + destroy.position.z);
+            }
+            writer.Close();
+        }
+
+        //Door Event
+
+        if (File.Exists("door.csv"))
+        {
+            StreamWriter writer = File.AppendText("door.csv");
+
+            foreach (DoorEvent door in Instance.doorList)
+            {
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + door.eventID.ToString("0000000000") + ";" + door.door_num + ";" );
+            }
+
+            writer.Close();
+        }
+        else
+        {
+            StreamWriter writer = File.CreateText("door.csv");
+
+            writer.WriteLine("session_id;event_id;door_num");
+
+            foreach (DoorEvent door in Instance.doorList)
+            {
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + door.eventID.ToString("0000000000") + ";" + door.door_num + ";" );
+            }
+            writer.Close();
+        }
     }
 
 

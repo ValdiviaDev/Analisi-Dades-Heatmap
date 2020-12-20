@@ -31,6 +31,8 @@ public class EventHandler : MonoBehaviour
         writer.SessionFinished(timer_sicne_start); 
     }
 
+    //Damage
+
     public void NewDamageEvent()
     {
         DamageEvent damageEvent = new DamageEvent();
@@ -45,6 +47,8 @@ public class EventHandler : MonoBehaviour
 
     }
 
+    //Death
+
     public void NewDeathEvent()
     {
         DeathEvent deathEvent   = new DeathEvent();
@@ -58,5 +62,54 @@ public class EventHandler : MonoBehaviour
         writer.AddDeathEvent(deathEvent);
 
     }
+
+    //Attack
+    /*public void NewAttackEvent()
+    {
+        AttackEvent attackEvent = new AttackEvent();
+
+        if (player)
+        {
+            attackEvent.attacks_num = 
+            attackEvent.enemies_killed = ;
+        }
+
+        writer.AddAttackEvent(attackEvent);
+
+    }*/
+
+    //Healing
+    /*
+    public void NewHealingEvent()    {
+        HealingEvent healingEvent = new HealingEvent();
+
+        if (player)
+        {
+            healingEvent.health_num =
+            healingEvent.hearts = 
+        }
+
+        writer.AddDeathEvent(healingEvent);
+
+    }
+    */
+
+    // Destroy Crate 
+
+    /*
+    public void NewDestroyCrateEvent()
+    {
+        DestroyCrateEvent destroycrateEvent = new DestroyCrateEvent();
+
+        if (player)
+        {
+            destroycrateEvent.position = player.transform.position;
+            destroycrateEvent.crates_destroyed = 
+        }
+
+        writer.AddDestroyCrateEvent(destroycrateEvent);
+
+    }
+    */
 
 }

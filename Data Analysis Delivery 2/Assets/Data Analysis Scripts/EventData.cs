@@ -24,7 +24,7 @@ public class DamageEvent : EventData
     public Vector3 position;
 }
 
-public class DestroyedCrateEvent : EventData
+public class DestroyCrateEvent : EventData
 {
     public Vector3 position;
     public int crates_destroyed;
