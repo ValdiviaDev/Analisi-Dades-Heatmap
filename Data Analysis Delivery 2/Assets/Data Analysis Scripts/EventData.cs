@@ -37,12 +37,12 @@ public class DoorEvent : EventData
 
 public class KillEvent : EventData
 {
-    public int attacks_num;
+  
     public int enemies_killed;
 }
 
 public class HealingEvent : EventData
 {
-    public int hearts;
+  
     public int health_num;
 }

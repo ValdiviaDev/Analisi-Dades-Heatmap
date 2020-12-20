@@ -10,9 +10,12 @@ public class EventHandler : MonoBehaviour
     private Writer writer;
 
     private int EnemyKillCount = 0;
+    private int HealthTimesCount = 0;
+    private int DestroyCrateCount = 0;
+    private int DoorOpenCount = 0;
 
     //Time in seconds
-    float timer_sicne_start = 0.0f;
+    float timer_since_start = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -25,12 +28,12 @@ public class EventHandler : MonoBehaviour
     void Update()
     {
         //Increase time each code iteration
-        timer_sicne_start += Time.deltaTime;
+        timer_since_start += Time.deltaTime;
     }
 
     public void EventSessionFinished()
     {
-        writer.SessionFinished(timer_sicne_start); 
+        writer.SessionFinished(timer_since_start); 
     }
 
     //Damage
@@ -42,7 +45,7 @@ public class EventHandler : MonoBehaviour
         if (player)
         {
             damageEvent.position = player.transform.position;
-            damageEvent.seconds_since_start = timer_sicne_start;
+            damageEvent.seconds_since_start = timer_since_start;
         }
 
         writer.AddDamageEvent(damageEvent);
@@ -74,7 +77,7 @@ public class EventHandler : MonoBehaviour
         if (player)
         {
             EnemyKillCount++;
-            attackEvent.seconds_since_start = timer_sicne_start;
+            attackEvent.seconds_since_start = timer_since_start;
             attackEvent.enemies_killed = EnemyKillCount;
         }
 
@@ -83,52 +86,57 @@ public class EventHandler : MonoBehaviour
     }
 
     //Healing
-    /*
+    
     public void NewHealingEvent()    {
         HealingEvent healingEvent = new HealingEvent();
 
         if (player)
         {
-            healingEvent.health_num =
-            healingEvent.hearts = 
+            HealthTimesCount++;
+            healingEvent.seconds_since_start = timer_since_start;
+            healingEvent.health_num = HealthTimesCount;
+      
         }
 
-        writer.AddDeathEvent(healingEvent);
+        writer.AddHealingEvent(healingEvent);
 
     }
-    */
+    
 
     // Destroy Crate 
 
-    /*
+    
     public void NewDestroyCrateEvent()
     {
         DestroyCrateEvent destroycrateEvent = new DestroyCrateEvent();
 
         if (player)
         {
+            DestroyCrateCount++;
+            destroycrateEvent.seconds_since_start = timer_since_start;
             destroycrateEvent.position = player.transform.position;
-            destroycrateEvent.crates_destroyed = 
+            destroycrateEvent.crates_destroyed = DestroyCrateCount;
         }
 
         writer.AddDestroyCrateEvent(destroycrateEvent);
 
     }
-    */
+    
 
     //Door Event
-    /* public void NewDoorEvent()
+     public void NewDoorEvent()
      {
          DoorEvent doorEvent = new DoorEvent();
 
          if (player)
          {
-             doorEvent.door_num =;
-
+            DoorOpenCount++;
+            doorEvent.seconds_since_start = timer_since_start;
+            doorEvent.door_num =DoorOpenCount;
          }
 
          writer.AddDoorEvent(doorEvent);
 
-     }*/
+     }
 
 }

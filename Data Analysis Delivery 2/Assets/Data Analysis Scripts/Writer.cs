@@ -220,7 +220,7 @@ public class Writer : MonoBehaviour
 
             foreach (HealingEvent healing in Instance.healingList)
             {
-                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + healing.eventID.ToString("0000000000") + ";" + healing.hearts + ";" + healing.health_num);
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + healing.eventID.ToString("0000000000") + ";" + healing.seconds_since_start + ";" + healing.health_num);
             }
 
             writer.Close();
@@ -229,11 +229,11 @@ public class Writer : MonoBehaviour
         {
             StreamWriter writer = File.CreateText("healing.csv");
 
-            writer.WriteLine("session_id;event_id;seconds_since_start;hearts;health_num;");
+            writer.WriteLine("session_id;event_id;seconds_since_start;health_num;");
 
             foreach (HealingEvent healing in Instance.healingList)
             {
-                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + healing.eventID.ToString("0000000000") + ";" + healing.hearts + ";" + healing.health_num);
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + healing.eventID.ToString("0000000000") + ";" + healing.seconds_since_start + ";" + healing.health_num);
             }
             writer.Close();
         }
@@ -246,7 +246,7 @@ public class Writer : MonoBehaviour
 
             foreach (DestroyCrateEvent destroy in Instance.destroyList)
             {
-                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + destroy.eventID.ToString("0000000000") + ";" + destroy.crates_destroyed + ";" + destroy.position.x + ";" + destroy.position.y + ";" + destroy.position.z);
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + destroy.eventID.ToString("0000000000") + ";" + destroy.position.x + ";" + destroy.position.y + ";" + destroy.position.z + ";" + destroy.seconds_since_start + ";" + destroy.crates_destroyed);
             }
 
             writer.Close();
@@ -255,11 +255,11 @@ public class Writer : MonoBehaviour
         {
             StreamWriter writer = File.CreateText("destroy_crate.csv");
 
-            writer.WriteLine("session_id;event_id;crates_destroyed;position_x;position_y;position_z;");
+            writer.WriteLine("session_id;event_id;position_x;position_y;position_z;seconds_since_start;crates_destroyed");
 
             foreach (DestroyCrateEvent destroy in Instance.destroyList)
             {
-                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + destroy.eventID.ToString("0000000000") + ";" + destroy.crates_destroyed + ";" + destroy.position.x + ";" + destroy.position.y + ";" + destroy.position.z);
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + destroy.eventID.ToString("0000000000") + ";" +  destroy.position.x + ";" + destroy.position.y + ";" + destroy.position.z + ";" + destroy.seconds_since_start + ";" + destroy.crates_destroyed);
             }
             writer.Close();
         }
@@ -281,11 +281,11 @@ public class Writer : MonoBehaviour
         {
             StreamWriter writer = File.CreateText("door.csv");
 
-            writer.WriteLine("session_id;event_id;door_num");
+            writer.WriteLine("session_id;event_id;seconds_since_start;door_num");
 
             foreach (DoorEvent door in Instance.doorList)
             {
-                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + door.eventID.ToString("0000000000") + ";" + door.door_num + ";" );
+                writer.WriteLine(Instance.sessionID.ToString("0000000000") + ";" + door.eventID.ToString("0000000000") + ";" + door.seconds_since_start + ";" + door.door_num + ";" );
             }
             writer.Close();
         }
