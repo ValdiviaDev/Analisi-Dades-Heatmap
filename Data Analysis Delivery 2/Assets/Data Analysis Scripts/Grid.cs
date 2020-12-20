@@ -144,20 +144,14 @@ public class Grid : MonoBehaviour
     }
     private void UpdateHeatmap(int x, int y)
     {
-
-
         GameObject go = null;
 
         Vector2 gridPos = new Vector2(x, y);
 
         if (cubes_heatmap.TryGetValue(gridPos, out go))
         {
-            //Succes
 
             Vector3[] points = new Vector3[5];
-
-            //go = (GameObject)Instantiate(null, points, Quaternion.identity);
-
 
 
         }
@@ -168,7 +162,7 @@ public class Grid : MonoBehaviour
 
 
             go = Instantiate(HeatMapCube, new Vector3(x * cubeSize + cubeSize / 2, 1, y * cubeSize + cubeSize / 2), Quaternion.identity);
-            go.transform.SetParent(this.gameObject.transform);
+            go.transform.SetParent(grid_parent.transform);
             go.transform.localScale *= cubeSize;
             cubes_heatmap.Add(gridPos, go);
             //go.GetComponent<MeshRenderer>().material = Instantiate(Resources.Load("_Materials/HeatMapCube") as Material);
@@ -193,14 +187,14 @@ public class Grid : MonoBehaviour
     public void SetCSVValues()
     {
 
-        if (System.IO.File.Exists("positions.csv"))
+        if (System.IO.File.Exists("Assets/CSV/positions.csv"))
         {
 
             List<string> stringList = new List<string>();
             List<string[]> parsedList = new List<string[]>();
             // List<Vector3> pos_list = new List<Vector3>();
 
-            StreamReader str_reader = new StreamReader("positions.csv");
+            StreamReader str_reader = new StreamReader("Assets/CSV/positions.csv");
             while (!str_reader.EndOfStream)
             {
                 string line = str_reader.ReadLine();
@@ -217,18 +211,18 @@ public class Grid : MonoBehaviour
                 {
                     temp[j] = temp[j].Trim();
 
-                    if (j == 3)
+                    if (j == 2)
                     {
                         posx = float.Parse(temp[j]);
 
                     }
 
-                    if (j == 4)
+                    if (j == 3)
                     {
                         posy = float.Parse(temp[j]);
                     }
 
-                    if (j == 5)
+                    if (j == 4)
                     {
                         posz = float.Parse(temp[j]);
                     }
